@@ -1,1 +1,1 @@
-declare module 'react-blockly';
+declare module 'leaphy-react-blockly';

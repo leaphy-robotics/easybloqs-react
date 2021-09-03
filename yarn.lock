@@ -2810,13 +2810,6 @@ bindings@^1.5.0:
   dependencies:
     file-uri-to-path "1.0.0"
 
-"blockly@>= 3.20200024.0":
-  version "6.20210701.0"
-  resolved "https://registry.yarnpkg.com/blockly/-/blockly-6.20210701.0.tgz#578dbdc59a61339a6ba29a69d0dc7bebeb8a19d1"
-  integrity sha512-cNrwFOAxXE5Pbs1FJAyLTlSRzpNW/C+0gPT2rGQDOJVVKcyF3vhFC1StgnxvQNsv//ueuksKWIXxDuSWh1VI4w==
-  dependencies:
-    jsdom "15.2.1"
-
 bluebird@^3.5.5:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
@@ -3159,9 +3152,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001181:
-  version "1.0.30001191"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001191.tgz#bacb432b6701f690c8c5f7c680166b9a9f0843d9"
-  integrity sha512-xJJqzyd+7GCJXkcoBiQ1GuxEiOBCLQ0aVW9HMekifZsAVGdj5eJ4mFB9fEhSHipq9IOk/QXFJUiIr9lZT+EsGw==
+  version "1.0.30001252"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001252.tgz"
+  integrity sha512-I56jhWDGMtdILQORdusxBOH+Nl/KgQSdDmpJezYddnAkVOmnoU8zwjTV9xAjMIYxr0iPreEAVylCGcmHCjfaOw==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -6951,6 +6944,21 @@ last-call-webpack-plugin@^3.0.0:
     lodash "^4.17.5"
     webpack-sources "^1.1.0"
 
+leaphy-blockly@^0.0.17:
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/leaphy-blockly/-/leaphy-blockly-0.0.17.tgz#7b2d890be2152843e508360e7539d071831e48c0"
+  integrity sha512-Ny9yrBfhIFmcb3sUvvLEDa8rEb5L2kW42Uu9UOW0QUsoTZjRix1MUyO8Z4j/VWeeoVAqrGoSuGSgQWRPKXfX8w==
+  dependencies:
+    jsdom "15.2.1"
+
+leaphy-react-blockly@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/leaphy-react-blockly/-/leaphy-react-blockly-0.0.7.tgz#d09d875512332f929def9e8f868365891ffc9116"
+  integrity sha512-NBRU6Dh28NofAn9dU5BTQmMYn4OZA8OWq3/e5/mZxoAcb2iuazeBRq+4uJRbx68se1a/IA5tULhuWS36DzbD1g==
+  dependencies:
+    leaphy-blockly "^0.0.17"
+    prop-types "^15.7.2"
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -9102,14 +9110,6 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
-
-react-blockly@^7.0.0-alpha.1:
-  version "7.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-blockly/-/react-blockly-7.0.0-alpha.1.tgz#e5de441e6d74103eb4dd7578bdd53863b8c782b1"
-  integrity sha512-y/sADUkW+uHi/vOhyRmvA8/B71jQ7aGf7Tfu7KpSb7BwLGuNVWRr96PEbefw6R5C145ozrOLAyVr/j4X3Z3lrQ==
-  dependencies:
-    blockly ">= 3.20200024.0"
-    prop-types "^15.7.2"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"

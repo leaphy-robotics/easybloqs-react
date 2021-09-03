@@ -1,5 +1,5 @@
 import './App.css';
-import { useBlocklyWorkspace } from 'react-blockly';
+import { useBlocklyWorkspace } from 'leaphy-react-blockly';
 import { useRef } from 'react'
 
 function App() {
