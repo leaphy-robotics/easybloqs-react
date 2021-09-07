@@ -1,0 +1,17 @@
+#blockly-container {
+    display: flex;
+}
+
+#blockly-view {
+    height: 1000px;
+    display: block;
+    width: 70%;
+}
+
+#code-view {
+    height: 1000px;
+    display: block;
+    width: 30%;
+
+}
+

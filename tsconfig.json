@@ -20,11 +20,11 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "typeRoots": [
-      "src/custom-typings",
+      "custom_typings",
       "node_modules/@types"
     ]
   },
   "include": [
     "src"
-  ]
+, "custom_typings"  ]
 }
