@@ -1,11 +1,11 @@
-
 import "./styles.css";
 
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { getToolbox } from './toolbox';
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
+import Button from '@material-ui/core/Button';
 
 const toolboxCategories = getToolbox();
 
@@ -14,9 +14,11 @@ const initialXml =
 
 export default function Blocky() {
     const onWorkspaceChange = (workspace: any) => {
-        const code = Blockly.Arduino.workspaceToCode(workspace);
-        console.log(code);
+        const updatedCode = Blockly.Arduino.workspaceToCode(workspace);
+        setCode(updatedCode);
     };
+
+    const [code, setCode] = useState<String>('');
 
     const blocklyRef = useRef(null);
     const { workspace, xml } = useBlocklyWorkspace({
@@ -29,7 +31,10 @@ export default function Blocky() {
     return (
         <div id="blockly-container">
             <div ref={blocklyRef} id="blockly-view" />
-            <div id="code-view">Code will be displayed here</div>
+            <div id="code-view">
+                <div><Button color="inherit">Upload</Button></div>
+                <div>{code}</div>
+            </div>
         </div>
     )
 };
