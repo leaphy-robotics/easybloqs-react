@@ -1,11 +1,13 @@
 import "./styles.css";
 
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { getToolbox } from './toolbox';
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
+
+import AvrgirlArduino from "./avrgirl-arduino.min.js";
 
 const toolboxCategories = getToolbox();
 
@@ -19,6 +21,60 @@ export default function Blocky() {
     };
 
     const [code, setCode] = useState<String>('');
+    const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
+
+    const onUploadClicked = () => {
+        setIsUploadClicked(true);
+    }
+
+    useEffect(() => {
+
+        if (!isUploadClicked) return;
+
+        const fetchSketch = async (): Promise<Blob> => {
+            console.log('gonna download the sketch yo');
+
+            const response = await fetch('https://test-compiled.s3.eu-west-1.amazonaws.com/easybloqs-react/green.hex')
+
+            return response.blob();
+        }
+
+        const flashBoard = (blob: Blob) => {
+            console.log('Totally flashing this board man');
+
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(blob);
+
+            reader.onload = event => {
+                if (!event || !event.target) {
+                    console.log('Error loading info from file! Aborting');
+                    return;
+                };
+
+                const filecontents = event.target.result;
+
+                const avrgirl = new AvrgirlArduino({
+                    board: 'uno',
+                    debug: true
+                });
+
+                avrgirl.flash(filecontents, (error: any) => {
+                    if (error) {
+                        console.error(error);
+                    } else {
+                        console.info("flash successful");
+                    }
+                });
+            };
+        }
+
+        fetchSketch().then(blob => flashBoard(blob));
+
+        setIsUploadClicked(false);
+
+    }, [isUploadClicked])
+
+
 
     const blocklyRef = useRef(null);
     const { workspace, xml } = useBlocklyWorkspace({
@@ -32,7 +88,7 @@ export default function Blocky() {
         <div id="blockly-container">
             <div ref={blocklyRef} id="blockly-view" />
             <div id="code-view">
-                <div><Button color="inherit">Upload</Button></div>
+                <div><Button onClick={onUploadClicked} color="inherit">Upload</Button></div>
                 <div>{code}</div>
             </div>
         </div>
