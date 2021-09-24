@@ -2,17 +2,17 @@ import "./styles.css";
 
 import { useBlocklyWorkspace } from 'leaphy-react-blockly';
 import { useRef, useState, useEffect } from 'react'
-import { getToolbox } from './toolbox';
+import categories from './toolbox/categories';
 import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
 
 import AvrgirlArduino from "./avrgirl-arduino.min.js";
 
-const toolboxCategories = getToolbox();
-
 const initialXml =
-    '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="text" x="70" y="30"><field name="TEXT"></field></block></xml>';
+    `<xml xmlns="https://developers.google.com/blockly/xml">
+    <block type="leaphy_start" id="rzE0Ve:6bHB~8aIqyj-U" deletable="false" x="500" y="10"/>
+</xml>`;
 
 export default function Blocky() {
     const onWorkspaceChange = (workspace: any) => {
@@ -20,7 +20,7 @@ export default function Blocky() {
         setCode(updatedCode);
     };
 
-    const [code, setCode] = useState<String>('');
+    const [code, setCode] = useState<string>('');
     const [isUploadClicked, setIsUploadClicked] = useState<boolean>(false);
 
     const onUploadClicked = () => {
@@ -31,12 +31,24 @@ export default function Blocky() {
 
         if (!isUploadClicked) return;
 
-        const fetchSketch = async (): Promise<Blob> => {
-            console.log('gonna download the sketch yo');
+        const compile = async (): Promise<Blob> => {
+            console.log('gonna compile da codez');
 
-            const response = await fetch('https://test-compiled.s3.eu-west-1.amazonaws.com/easybloqs-react/green.hex')
+            const payload = {
+                sketch: code
+            }
 
-            return response.blob();
+            const compileResponse = await fetch("http://localhost:8010/proxy/2015-03-31/functions/function/invocations",
+                {
+                    headers: {
+                    },
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                })
+
+            const responseJson = await compileResponse.json();
+            const binaryFetchResponse = await fetch(responseJson.body.binaryLocation);
+            return await binaryFetchResponse.blob();
         }
 
         const flashBoard = (blob: Blob) => {
@@ -50,6 +62,8 @@ export default function Blocky() {
                     console.log('Error loading info from file! Aborting');
                     return;
                 };
+
+                console.log(event);
 
                 const filecontents = event.target.result;
 
@@ -68,7 +82,7 @@ export default function Blocky() {
             };
         }
 
-        fetchSketch().then(blob => flashBoard(blob));
+        compile().then(blob => flashBoard(blob));
 
         setIsUploadClicked(false);
 
@@ -79,7 +93,7 @@ export default function Blocky() {
     const blocklyRef = useRef(null);
     const { workspace, xml } = useBlocklyWorkspace({
         ref: blocklyRef,
-        toolboxConfiguration: toolboxCategories,
+        toolboxConfiguration: categories,
         initialXml: initialXml,
         className: "fill-height",
         onWorkspaceChange: onWorkspaceChange
