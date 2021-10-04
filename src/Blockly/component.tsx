@@ -50,13 +50,14 @@ export default function Blocky() {
 
             let compileResponse;
             try{
-                compileResponse = await fetch("https://tprycoh346.execute-api.eu-west-1.amazonaws.com/prod", request);
+                compileResponse = await fetch("https://c0lz7poj8g.execute-api.eu-west-1.amazonaws.com", request);
             } catch(err){
                 throw new Error("Something went wrong");
             }
             
             const responseJson = await compileResponse.json();
-            const binaryFetchResponse = await fetch(responseJson.body.binaryLocation);
+            console.log(responseJson);
+            const binaryFetchResponse = await fetch(responseJson.binaryLocation);
             return await binaryFetchResponse.blob();
         }
 
