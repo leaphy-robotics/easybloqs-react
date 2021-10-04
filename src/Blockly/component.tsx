@@ -7,7 +7,7 @@ import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
 
-import AvrgirlArduino from "./avrgirl-arduino.min.js";
+import * as AvrgirlArduino from "./avrgirl-arduino.min.js" ;
 
 const initialXml =
     `<xml xmlns="https://developers.google.com/blockly/xml">
@@ -38,14 +38,23 @@ export default function Blocky() {
                 sketch: code
             }
 
-            const compileResponse = await fetch("http://localhost:8010/proxy/2015-03-31/functions/function/invocations",
-                {
-                    headers: {
-                    },
-                    method: "POST",
-                    body: JSON.stringify(payload)
-                })
+            const request: RequestInit = {
+                method: "POST",
+                body: JSON.stringify(payload),
+                mode: "cors",
+                redirect: "follow",
+                headers: {
+                    "content-type": "application/json" 
+                }
+            }
 
+            let compileResponse;
+            try{
+                compileResponse = await fetch("https://tprycoh346.execute-api.eu-west-1.amazonaws.com/prod", request);
+            } catch(err){
+                throw new Error("Something went wrong");
+            }
+            
             const responseJson = await compileResponse.json();
             const binaryFetchResponse = await fetch(responseJson.body.binaryLocation);
             return await binaryFetchResponse.blob();
@@ -86,7 +95,7 @@ export default function Blocky() {
 
         setIsUploadClicked(false);
 
-    }, [isUploadClicked])
+    }, [isUploadClicked, code])
 
 
 
