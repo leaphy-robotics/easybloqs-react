@@ -7,8 +7,8 @@ import Blockly from "leaphy-blockly";
 import "leaphy-blockly/arduino"
 import Button from '@material-ui/core/Button';
 
-//import * as AvrgirlArduino from "./avrgirl-arduino.min.js" ;
-import * as AvrgirlArduino from "./avrgirl-arduino";
+import * as AvrgirlArduino from "./avrgirl-arduino.min.js" ;
+//import AvrgirlArduino from "./avrgirl-arduino";
 
 const initialXml =
     `<xml xmlns="https://developers.google.com/blockly/xml">
