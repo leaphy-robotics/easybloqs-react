@@ -101,7 +101,7 @@ export default function Blocky() {
 
 
     const blocklyRef = useRef(null);
-    const { workspace, xml } = useBlocklyWorkspace({
+    useBlocklyWorkspace({
         ref: blocklyRef,
         toolboxConfiguration: categories,
         initialXml: initialXml,
